@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绝地求生-绝地求生官方网站-腾讯游戏</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+        }
+        .top {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+        .top_con {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .logo img {
+            max-height: 50px;
+            width: auto;
+            display: block;
+        }
+        .clearfix {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        .clearfix li {
+            margin-right: 20px;
+        }
+        .clearfix a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        .clearfix a:hover {
+            color: #f39c12;
+        }
+        .btn_enter {
+            background-color: #f39c12;
+            color: #fff;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .btn_enter:hover {
+            background-color: #e67e22;
+        }
+        .section {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.5);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .title {
+            font-size: 60px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .title_sub {
+            font-size: 36px;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .link_video {
+            background-color: rgba(243, 156, 18, 0.8);
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+        .link_video:hover {
+            background-color: rgba(230, 126, 34, 0.8);
+        }
+        .code_wrap {
+            margin-top: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .code_wrap p {
+            margin: 0;
+            font-size: 18px;
+        }
+        .code_wrap span {
+            font-weight: bold;
+            color: #f39c12;
+        }
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .video-container video {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .close-video {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        .auth-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 0 20px rgba(243, 156, 18, 0.3);
+        }
+        .auth-container h2 {
+            color: #f39c12;
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+        .auth-container input {
+            display: block;
+            width: 100%;
+            margin: 15px 0;
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid #f39c12;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .auth-container input:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-bottom-color: #e67e22;
+        }
+        .auth-container button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f39c12;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .auth-container button:hover {
+            background-color: #e67e22;
+        }
+        .switch-form {
+            color: #f39c12;
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-block;
+            transition: color 0.3s;
+        }
+        .switch-form:hover {
+            color: #e67e22;
+        }
+        .error-message {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .auth-logo {
+            margin-bottom: 20px;
+        }
+        .auth-logo img {
+            max-width: 150px;
+            height: auto;
+        }
+        .main-content {
+            display: none;
+        }
+        .user-menu {
+            display: none;
+            align-items: center;
+            position: relative;
+        }
+        .user-avatar-container {
+            position: relative;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .online-indicator {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            background-color: #2ecc71;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+        .welcome-message {
+            margin-right: 10px;
+            color: #fff;
+            font-size: 14px;
+        }
+        .user-dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            right: 0;
+            top: 100%;
+        }
+        .user-avatar-container:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: rgba(0, 0, 0, 0.8);
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(243, 156, 18, 0.3);
+            color: #fff;
+        }
+
+        .modal-content h2 {
+            color: #f39c12;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-bottom: 2px solid #f39c12;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .modal-content button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #f39c12;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal-content button:hover {
+            background-color: #e67e22;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #f39c12;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #avatarPreviewModal {
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            border-radius: 50%;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background-color: #f39c12;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .download-btn:hover {
+            background-color: #e67e22;
+        }
+    </style>
+    <script>
+        const videos = ['shipin1.mp4', 'shipin2.mp4', 'shipin3.mp4', 'shipin4.mp4'];
+        let currentVideoIndex = 0;
+
+        function rotateBackgroundVideo() {
+            const video = document.getElementById('backgroundVideo');
+            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+            video.src = `videos/${videos[currentVideoIndex]}`;
+            video.load();
+            video.play().catch(e => console.error("Video play failed:", e));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('backgroundVideo');
+            video.addEventListener('ended', rotateBackgroundVideo);
+            
+            // 确保第一个视频开始播放
+            video.play().catch(e => console.error("Initial video play failed:", e));
+        });
+
+        // 添加这个函数来检查视频是否正在播放
+        function checkVideoPlayback() {
+            const video = document.getElementById('backgroundVideo');
+            if (video.paused) {
+                console.log("Video is paused, attempting to play...");
+                video.play().catch(e => console.error("Video play failed:", e));
+            }
+        }
+
+        // 每5秒检查一次视频是否在播放
+        setInterval(checkVideoPlayback, 5000);
+
+        function downloadFile() {
+            window.location.href = 'download.php';
+        }
+    </script>
+</head>
+<body>
+    <video id="backgroundVideo" class="video-background" autoplay muted>
+        <source src="videos/shipin1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="top">
+        <div class="top_con">
+            <a href="#" class="logo" title="绝地求生官方网站">
+                <img src="images/tupian2.png" alt="绝地求生" height="70">
+            </a>
+            <div class="user-menu" id="userMenu">
+                <span class="welcome-message">欢迎, <span id="username"></span></span>
+                <div class="user-avatar-container">
+                    <img src="" alt="Avatar" class="user-avatar" id="userAvatar">
+                    <div class="online-indicator"></div>
+                    <div class="user-dropdown">
+                        <div class="dropdown-content">
+                            <a href="#" onclick="showChangePasswordModal()">修改密码</a>
+                            <a href="#" onclick="showChangeAvatarModal()">修改头像</a>
+                            <a href="#" onclick="logout()">登出</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="auth-container" id="authContainer">
+        <div class="auth-logo">
+            <img src="images/tupian2.png" alt="绝地求生">
+        </div>
+        <form id="loginForm">
+            <h2>登录账号</h2>
+            <input type="text" name="username" placeholder="用户名" required>
+            <input type="password" name="password" placeholder="密码" required>
+            <button type="submit">登录</button>
+            <p class="switch-form" onclick="showRegisterForm()">还没有账号？立即注册</p>
+            <p class="error-message" id="loginError"></p>
+        </form>
+        <form id="registerForm" style="display:none;">
+            <h2>创建账号</h2>
+            <input type="text" name="username" placeholder="用户名" required>
+            <input type="password" name="password" placeholder="密码" required>
+            <input type="email" name="email" placeholder="电子邮件" required>
+            <div class="avatar-preview" id="avatarPreview"></div>
+            <input type="hidden" name="avatar" id="avatarInput" value="touxiang.jpg" required>
+            <button type="submit">注册</button>
+            <p class="switch-form" onclick="showLoginForm()">已有账号？立即登录</p>
+            <p class="error-message" id="registerError"></p>
+        </form>
+    </div>
+
+    <div class="main-content">
+        <div id="fullpage">
+            <div class="section header active" data-anchor="section1">
+                <h1 class="title">勇者无绝地</h1>
+                <h2 class="title_sub">绝地求生</h2>
+                <div class="code_wrap">
+                    <p>PUBG社区：<span>绝地求生官方APP</span></p>
+                </div>
+                <!-- 添加下载按钮 -->
+                <a href="#" class="download-btn" onclick="downloadFile()">下载游戏</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="video-container">
+        <span class="close-video" onclick="hideVideo()">&times;</span>
+        <video id="videoPlayer" controls></video>
+    </div>
+
+    <div id="changePasswordModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('changePasswordModal')">&times;</span>
+            <h2>修改密码</h2>
+            <form id="changePasswordForm">
+                <input type="password" id="currentPassword" placeholder="当前密码" required>
+                <input type="email" id="emailForVerification" placeholder="注册邮箱" required>
+                <input type="text" id="verificationCode" placeholder="验证码" required>
+                <button type="button" onclick="sendVerificationCode()">发送验证码</button>
+                <input type="password" id="newPassword" placeholder="新密码" required>
+                <input type="password" id="confirmPassword" placeholder="确认新密码" required>
+                <button type="submit">确认修改</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="changeAvatarModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('changeAvatarModal')">&times;</span>
+            <h2>修改头像</h2>
+            <div id="avatarPreviewModal"></div>
+            <form id="changeAvatarForm">
+                <input type="file" id="newAvatar" accept="image/jpeg,image/png,image/gif,image/webp,image/bmp" required>
+                <button type="submit">上传新头像</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showVideo(videoNumber) {
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.src = `videos/shipin${videoNumber}.mp4`;
+            document.querySelector('.video-container').style.display = 'flex';
+            videoPlayer.play();
+        }
+
+        function hideVideo() {
+            const videoContainer = document.querySelector('.video-container');
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoContainer.style.display = 'none';
+            videoPlayer.pause();
+            videoPlayer.currentTime = 0;
+        }
+
+        function vplay(playerid, vid) {
+            var player = new Txplayer({
+                containerId: playerid,
+                vid: vid,
+                width: '100%',
+                height: '100%',
+                autoplay: true
+            });
+            document.getElementById('player_box').style.display = 'block';
+        }
+
+        function vplay_close() {
+            document.getElementById('player_box').style.display = 'none';
+            document.getElementById('player').innerHTML = '';
+        }
+
+        function showLoginForm() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+        }
+
+        function showRegisterForm() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        function showError(formId, message) {
+            const errorElement = document.getElementById(formId + 'Error');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        function hideError(formId) {
+            const errorElement = document.getElementById(formId + 'Error');
+            errorElement.style.display = 'none';
+        }
+
+        function updateUserStatus(loggedIn, username) {
+            const userStatus = document.getElementById('userStatus');
+            const profileBtn = document.getElementById('profileBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            if (loggedIn) {
+                userStatus.textContent = `欢迎, ${username}`;
+                userStatus.style.display = 'inline';
+                profileBtn.style.display = 'inline';
+                logoutBtn.style.display = 'inline';
+                document.getElementById('authContainer').style.display = 'none';
+                document.querySelector('.main-content').style.display = 'block';
+            } else {
+                userStatus.style.display = 'none';
+                profileBtn.style.display = 'none';
+                logoutBtn.style.display = 'none';
+                document.getElementById('authContainer').style.display = 'block';
+                document.querySelector('.main-content').style.display = 'none';
+            }
+        }
+
+        function logout() {
+            fetch('logout.php')
+            .then(response => response.text())
+            .then(result => {
+                if (result === "登出成功") {
+                    updateUserStatus(false);
+                }
+            });
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            hideError('login');
+            var formData = new FormData(this);
+            fetch('login.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Login response:", data);
+                if (data.success) {
+                    console.log("Login successful, updating UI");
+                    updateUserInterface(data.username, data.avatarUrl);
+                } else {
+                    console.log("Login failed:", data.message);
+                    showError('login', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Login error:', error);
+            });
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            hideError('register');
+            var formData = new FormData(this);
+            fetch('register.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(result => {
+                if (result === "注册成功") {
+                    showLoginForm();
+                    showError('login', "注册成功，请登录");
+                } else {
+                    showError('register', result);
+                }
+            });
+        });
+
+        window.addEventListener('load', function() {
+            const avatarPreview = document.getElementById('avatarPreview');
+            avatarPreview.style.backgroundImage = "url('avatars/touxiang.jpg')";
+        });
+
+        function updateUserInterface(username, avatarUrl) {
+            console.log("Updating user interface");
+            console.log("Username:", username);
+            console.log("Avatar URL:", avatarUrl);
+
+            document.getElementById('username').textContent = username;
+            document.getElementById('userAvatar').src = avatarUrl;
+            
+            const userMenu = document.getElementById('userMenu');
+            const welcomeMessage = userMenu.querySelector('.welcome-message');
+            const userAvatarContainer = userMenu.querySelector('.user-avatar-container');
+            
+            welcomeMessage.style.display = 'inline';
+            userAvatarContainer.style.display = 'inline-block';
+            userMenu.style.display = 'flex';
+
+            document.getElementById('authContainer').style.display = 'none';
+            document.querySelector('.main-content').style.display = 'block';
+
+            console.log("User menu display:", getComputedStyle(userMenu).display);
+            console.log("Welcome message display:", getComputedStyle(welcomeMessage).display);
+            console.log("User avatar container display:", getComputedStyle(userAvatarContainer).display);
+
+            console.log("Update complete");
+        }
+
+        function showChangePasswordModal() {
+            document.getElementById('changePasswordModal').style.display = 'block';
+        }
+
+        function showChangeAvatarModal() {
+            document.getElementById('changeAvatarModal').style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function sendVerificationCode() {
+            const email = document.getElementById('emailForVerification').value;
+            fetch('send_verification_code.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('验证码已发送到您的邮箱');
+                } else {
+                    alert('发送验证码失败: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('发生错误，请稍后再试');
+            });
+        }
+
+        document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const currentPassword = document.getElementById('currentPassword').value;
+            const email = document.getElementById('emailForVerification').value;
+            const verificationCode = document.getElementById('verificationCode').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                alert('新密码和确认密码不匹配');
+                return;
+            }
+
+            fetch('change_password.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    currentPassword: currentPassword,
+                    email: email,
+                    verificationCode: verificationCode,
+                    newPassword: newPassword
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('密码修改成功');
+                    closeModal('changePasswordModal');
+                } else {
+                    alert('密码修改失败: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('发生错误，请稍后再试');
+            });
+        });
+
+        document.getElementById('changeAvatarForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('newAvatar');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('请选择一个图片文件');
+                return;
+            }
+
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp'];
+            if (!allowedTypes.includes(file.type)) {
+                alert('请选择有效的图片文件（JPEG, PNG, GIF, WebP 或 BMP）');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('avatar', file);
+
+            fetch('change_avatar.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('头像上传成功');
+                    document.getElementById('userAvatar').src = data.newAvatarUrl;
+                    closeModal('changeAvatarModal');
+                } else {
+                    alert('头像上传失败: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('发生错误，请稍后再试');
+            });
+        });
+
+        document.getElementById('newAvatar').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('avatarPreviewModal').style.backgroundImage = `url('${event.target.result}')`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
